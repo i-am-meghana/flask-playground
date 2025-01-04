@@ -3,7 +3,7 @@ from flask import Flask, request,jsonify
 app = Flask(__name__)
 
 @app.route('/notes')
-def index():
+def index(): #view function
     return "hello"
 
  #will throw value error if theres a gap between int: and notes_id
@@ -23,15 +23,19 @@ def handling_parameters():
 
 @app.route('/handle_url_parameters')
 def handle_parameters():
-    greeting = request.args.get('greeting')
-    name = request.args.get('name')
-    return f'{greeting} {name}'
-#http://10.0.0.215:5555/handle_url_parameters?name=mike&greeting=hello
-#hello mike
+    if 'greeting' in request.args.keys() and 'name' in request.args.keys():
+        greeting = request.args.get('greeting')
+        name = request.args.get('name')
+        return f'{greeting} {name}'
+    #http://10.0.0.215:5555/handle_url_parameters?name=mike&greeting=hello
+    #hello mike
+    
+    else:
+        return 'Some parameters are missing'
+    #http://10.0.0.215:5555/handle_url_parameters?name=mike
+    #Some parameters are missing
 
 
-
-#return jsonify({"msg": "Friend created succesfully"}), 201
 
 if __name__ == '__main__':
     app.run(host = '0.0.0.0', port = 5555, debug = True)
