@@ -36,6 +36,18 @@ def handle_parameters():
     #Some parameters are missing
 
 
+#Create a route that accepts a query parameter called name and returns a greeting message based on that parameter.
+@app.route('/greet/<int:user_id>')
+def greeting(user_id):
+    name = request.args.get('name', 'Guest')  # Default value 'Guest' if 'name' is not provided
+    age = request.args.get('age','none')
+    return f'Hello {name}{user_id} of age {age}'
+#Extend the previous example to accept two query parameters: name and age. You will return a message that includes both the name and the age.
+# combine query parameters with URL parameters http://10.0.0.215:5555/greet/10?name=jenry&age=12
+
+#request.args is a dictionary 
+
+
 
 if __name__ == '__main__':
     app.run(host = '0.0.0.0', port = 5555, debug = True)
