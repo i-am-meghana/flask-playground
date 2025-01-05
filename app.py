@@ -39,9 +39,10 @@ def handle_parameters():
 #Create a route that accepts a query parameter called name and returns a greeting message based on that parameter.
 @app.route('/greet/<int:user_id>')
 def greeting(user_id):
+    print(request)
     name = request.args.get('name', 'Guest')  # Default value 'Guest' if 'name' is not provided
     age = request.args.get('age','none')
-    return f'Hello {name}{user_id} of age {age}'
+    return jsonify(f'Hello {name}{user_id} of age {age}')
 #Extend the previous example to accept two query parameters: name and age. You will return a message that includes both the name and the age.
 # combine query parameters with URL parameters http://10.0.0.215:5555/greet/10?name=jenry&age=12
 
@@ -77,6 +78,11 @@ def show_comment(post_id, comment_id=None):
 @app.route('/product/<int:product_id>/comment/<int:comment_id>')
 def show_product(product_id, comment_id): #this is the endpoint?
     return f'product ID: {product_id}, Comment ID: {comment_id}'
+
+#jsonify
+@app.route('/hello')
+def hello():
+    return jsonify({"message": "Hello, World!"})
 
 
 
