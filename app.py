@@ -1,7 +1,7 @@
-from flask import Flask, request,jsonify
+from flask import Flask, request,jsonify, session
 
 app = Flask(__name__)
-
+app.secret_key = 'your_secret_key'
 @app.route('/notes')
 def index(): #view function
     return "hello"
@@ -57,7 +57,8 @@ def show_comment(post_id, comment_id=None):
     comment_id = request.args.get('comment_id', comment_id or 1, type=int)
     
     return f'Post ID: {post_id}, Comment ID: {comment_id}'
-#/post/10/comment/5?comment_id=20
+"""
+/post/10/comment/5?comment_id=20
 #comment_id = 20 (from query string).
 
 #/post/10/comment/5
@@ -71,7 +72,7 @@ def show_comment(post_id, comment_id=None):
 
 #/post/10/comment/0
 #Post ID: 10, Comment ID: 1
-
+"""
 
 #You can also define default values for variables if needed    
 @app.route('/product/<int:product_id>', defaults={'comment_id': 0})
@@ -136,6 +137,30 @@ def profile_update(id):
         return jsonify({"message": "Profile updated", "profile": updated_data}), 200
     else:
         return jsonify({"message": "Profile not found"}), 404
+
+#Accept the user ID as part of the URL.
+#Check if the user exists and remove them from the list if found.
+#Return a confirmation message.
+
+@app.route('/profile/<int:id>', methods=['DELETE'])
+def delete_profile(id):
+    if id < len(profiles):
+        deleted_data = profiles.pop(id)
+        return jsonify({"message":"profile deleted"})
+    else:
+        return jsonify({"message": "Profile not found"}), 404
+
+USER_CREDENTIALS = {'username': 'admin', 'password': 'password123'}
+@app.route('/login', methods=['POST'])
+def login():
+    data = request.get_json()
+    username = data.get('username')
+    password = data.get('password')
+    
+    if username == USER_CREDENTIALS['username'] and password == USER_CREDENTIALS['password']:
+        session['logged_in'] = True
+        return jsonify({"message": "Login successful!"}), 200
+    return jsonify({"message": "Invalid credentials!"}), 401
 
 
 
