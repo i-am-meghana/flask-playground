@@ -92,11 +92,36 @@ def hello():
 data_store = []
 @app.route('/submit', methods=['POST'])
 def submit_data():
-    data = request.get_json()#convert the JSON into a Python dictionary
+    data = request.get_json()#convert the JSON into a Python dictionary. request contains the data sent by the client
     data_store.append(data)#will add this dictionary to the data_store list
     #Before: data_store = []
     #After: data_store = [{"name": "Jane Smith", "age": 25, "email": "jane.smith@example.com"}]
     return jsonify({"message": "Data submitted successfully", "data": data}), 201
+
+
+#Create an API endpoint that allows users to submit their profile information (name, age, email). The data should be stored in a list, 
+# and when a user sends a POST request with their profile, return a confirmation message along with the data.
+
+
+#Create an endpoint /profile that accepts a POST request with user profile data (name, age, email).
+# A global list to store the profiles
+profiles = []
+
+# Route to handle POST request and store profiles
+@app.route('/profile', methods=['POST'])
+def submit_profile():
+    # Get JSON data from the request
+    profile_data = request.get_json()
+    
+    # Store the profile data in the global list
+    profiles.append(profile_data)
+    
+    # Return a success message with the stored profile
+    return jsonify({"message": "Profile added successfully", "profile": profile_data}), 201
+
+
+
+
 
 
 if __name__ == '__main__':
