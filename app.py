@@ -119,7 +119,23 @@ def submit_profile():
     # Return a success message with the stored profile
     return jsonify({"message": "Profile added successfully", "profile": profile_data}), 201
 
+#Create a GET endpoint that returns all the profiles submitted so far
+# Route to handle GET request and return all profiles
+@app.route('/profiles', methods=['GET'])
+def get_profiles():
+    # Return all stored profiles
+    return jsonify({"profiles": profiles}), 200
 
+#Create an API endpoint /profile/<id> that allows updating a user's profile using their ID. 
+# The user ID should be included in the request URL, and the data should be updated in the list.
+@app.route('/profile/<int:id>', methods=['PUT'])
+def profile_update(id):
+    updated_data = request.get_json()
+    if id < len(profiles):
+        profiles[id] = updated_data
+        return jsonify({"message": "Profile updated", "profile": updated_data}), 200
+    else:
+        return jsonify({"message": "Profile not found"}), 404
 
 
 
