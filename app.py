@@ -162,7 +162,24 @@ def login():
         return jsonify({"message": "Login successful!"}), 200
     return jsonify({"message": "Invalid credentials!"}), 401
 
+@app.route('/logout', methods=['POST'])
+def logout():
+    session.pop('logged_in', None)
+    return jsonify({"message": "Logged out successfully!"}), 200
 
+@app.route('/multiply', methods=['POST'])
+def multiply_numbers():
+    
+    data = request.get_json()
+
+    num1 = data.get('num1')
+    num2 = data.get('num2')
+
+    if num1 is None or num2 is None:
+        return jsonify({"error": "Both 'num1' and 'num2' are required"}), 400
+
+    result = num1 * num2
+    return jsonify({"result": "hehe"})
 
 
 if __name__ == '__main__':
