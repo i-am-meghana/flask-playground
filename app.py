@@ -48,6 +48,8 @@ def greeting(user_id):
 
 #request.args is a dictionary 
 
+
+#Data can also be passed through the URL as query parameters. This is commonly used in GET requests but can be used in POST requests too
 #multiple variables in a route
 #made comment_id optional that route will default to 1
 @app.route('/post/<int:post_id>/comment/', methods=['GET'])
@@ -167,19 +169,29 @@ def logout():
     session.pop('logged_in', None)
     return jsonify({"message": "Logged out successfully!"}), 200
 
-@app.route('/multiply', methods=['POST'])
-def multiply_numbers():
-    
+
+@app.route('/text', methods=['POST'])
+def handle_text():
+    text = request.data.decode('utf-8')  # Access raw body text
+    return f"Received text: {text}"
+
+#You can validate the JSON data manually by checking keys and values.
+def validate_json(data):
+    if 'name' not in data or 'age' not in data:
+        return False
+    return True
+
+@app.route('/data', methods=['POST'])
+def handle_data():
     data = request.get_json()
 
-    num1 = data.get('num1')
-    num2 = data.get('num2')
+    if not data or not validate_json(data):
+        return jsonify({"error": "Invalid data format"}), 400
 
-    if num1 is None or num2 is None:
-        return jsonify({"error": "Both 'num1' and 'num2' are required"}), 400
+    return jsonify({"message": "Data received successfully"}), 200
 
-    result = num1 * num2
-    return jsonify({"result": "hehe"})
+
+
 
 
 if __name__ == '__main__':
