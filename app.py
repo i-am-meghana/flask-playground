@@ -175,7 +175,7 @@ def handle_text():
     text = request.data.decode('utf-8')  # Access raw body text
     return f"Received text: {text}"
 
-#You can validate the JSON data manually by checking keys and values.
+#validate the JSON data manually by checking keys and values.
 def validate_json(data):
     if 'name' not in data or 'age' not in data:
         return False
@@ -189,6 +189,27 @@ def handle_data():
         return jsonify({"error": "Invalid data format"}), 400
 
     return jsonify({"message": "Data received successfully"}), 200
+
+
+#The client sends some JSON data.The server should just return the same data in the response.
+@app.route('/echo', methods=['POST'])
+def echo_back():
+    data = request.get_json()
+    return jsonify({"message":data})
+
+#The client sends a JSON object with name and age. The server should return a formatted string (e.g., Name: Alice, Age: 25).
+@app.route('/format', methods=['POST'])
+def format_data():
+    data = request.get_json()
+    name = data.get('name')
+    age = data.get('age')
+    return jsonify({"message": f"Name: {name}, Age: {age}"})
+
+
+
+
+
+
 
 
 
