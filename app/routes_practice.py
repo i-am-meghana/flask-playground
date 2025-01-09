@@ -38,3 +38,13 @@ def show_comment(post_id, comment_id=None):
 @routes_bp.route('/product/<int:product_id>/comment/<int:comment_id>')
 def show_product(product_id, comment_id):
     return f'product ID: {product_id}, Comment ID: {comment_id}'
+
+
+data_store = []
+@routes_bp.route('/submit', methods=['POST'])
+def submit_data():
+    data = request.get_json()#convert the JSON into a Python dictionary. request contains the data sent by the client
+    data_store.append(data)#will add this dictionary to the data_store list
+    #Before: data_store = []
+    #After: data_store = [{"name": "Jane Smith", "age": 25, "email": "jane.smith@example.com"}]
+    return jsonify({"message": "Data submitted successfully", "data": data}), 201
