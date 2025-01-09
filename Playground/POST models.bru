@@ -1,0 +1,21 @@
+meta {
+  name: POST models
+  type: http
+  seq: 14
+}
+
+post {
+  url: http://10.0.0.215:5555/echo
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "name":"mike"
+  }
+}
+
+body:text {
+  helo its me again
+}

@@ -1,0 +1,23 @@
+meta {
+  name: GET models
+  type: http
+  seq: 15
+}
+
+post {
+  url: http://127.0.0.1:5000/books
+  body: json
+  auth: none
+}
+
+body:json {
+  { 
+    "title": "The Great Gatsby", 
+    "author": "F. Scott Fitzgerald", 
+    "genre": "Novel" 
+  }
+}
+
+body:text {
+  helo its me again
+}

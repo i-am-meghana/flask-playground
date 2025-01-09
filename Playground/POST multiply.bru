@@ -1,0 +1,18 @@
+meta {
+  name: POST multiply
+  type: http
+  seq: 10
+}
+
+post {
+  url: http://10.0.0.215:5555/data
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "name": "mike",
+    "age": 23
+  }
+}
