@@ -46,3 +46,10 @@ def user_data():
 
 @models_bp.route('/user/<int:id>', methods=['PUT'])
 def user_update(id):
+    user= User.query.get(id)
+    data = request.get_json
+    user.name = data.get('name', user.name)
+    user.email = data.get('email', user.email)
+    
+    db.session.commit()
+    return jsonify({'message': 'User updated'}), 200
