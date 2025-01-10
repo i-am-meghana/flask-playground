@@ -1,0 +1,22 @@
+meta {
+  name: POST user to database
+  type: http
+  seq: 18
+}
+
+post {
+  url: http://127.0.0.1:5000/models/create
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "name": "Jane Smith", 
+    "email": "jane.smith@example.com"
+  }
+}
+
+body:text {
+  helo its me again
+}
