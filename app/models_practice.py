@@ -44,4 +44,5 @@ def user_data():
     return jsonify([{'id': user.id, 'name': user.name, 'email': user.email} for user in users])
 
 
-@models_bp   
+@models_bp.route('/user/<int:id>', methods=['PUT'])
+def user_update(id):
