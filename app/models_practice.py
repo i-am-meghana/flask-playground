@@ -42,3 +42,6 @@ def create_user():#view function
 def user_data():
     users = User.query.all()
     return jsonify([{'id': user.id, 'name': user.name, 'email': user.email} for user in users])
+
+
+@models_bp   
