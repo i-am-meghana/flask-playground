@@ -17,10 +17,16 @@ def create_app():
     from app.jsonify_practice import jsonify_bp
     from app.validation_practice import validation_bp
     from app.user_management import user_bp
+    from app.models_practice import models_bp
 
     app.register_blueprint(routes_bp, url_prefix='/routes')
     app.register_blueprint(jsonify_bp, url_prefix='/jsonify')
     app.register_blueprint(validation_bp, url_prefix='/validation')
     app.register_blueprint(user_bp, url_prefix='/user')
-
+    app.register_blueprint(models_bp, url_prefix='/models')
+ 
+    # Create all database tables
+    with app.app_context():
+        db.create_all()
+    
     return app
