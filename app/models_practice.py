@@ -53,3 +53,5 @@ def user_update(id):
     
     db.session.commit()
     return jsonify({'message': 'User updated'}), 200
+
+#practice CRUD with the database along with try and exception 11/1/25
